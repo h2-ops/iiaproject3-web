@@ -789,8 +789,8 @@
             <div class="vol-note">练习：即点即判。考试：每题 1 分 12 秒计时，交卷后出分。两种方式答对的题都会移出错题本，剩下的错题会重新分卷。</div>
           </div>
           <label class="check-row">
-            <input id="includeReview" type="checkbox">
-            <span>包含待复核题（默认跳过；原卷考试保留并按原答案计分）</span>
+            <input id="includeReview" type="checkbox" checked>
+            <span>包含待复核题（默认包含10道；保留复核提示，按原卷答案计分）</span>
           </label>
           <div id="resumeWrap" class="resume-list hidden">
             <div class="resume-title">未完成的进度（所有已连接设备共用）</div>
@@ -961,7 +961,7 @@
         <div id="manageList" class="review-list"></div>
         <div class="connect-actions"><button id="managePrev" class="btn secondary small" type="button">上一页</button><span id="managePage"></span><button id="manageNext" class="btn secondary small" type="button">下一页</button></div>
       </div>
-      <div class="notice">待复核题保留原卷参考答案，AI意见尚未获出题方确认。原卷考试保留全部原题；通用练习默认跳过待复核题。题库更新使用相同题号时保留已有学习进度。</div>
+      <div class="notice">待复核题保留原卷参考答案，AI意见尚未获出题方确认。原卷考试保留全部原题；通用练习、背题和模考默认包含待复核题；可在首页取消勾选以暂时跳过。题库更新使用相同题号时保留已有学习进度。</div>
     </section>
     <section id="historyView" class="history-wrap hidden">
       <div class="history-head">
@@ -1372,7 +1372,7 @@
     }
 
     function renderStats() {
-      $("#safeCount").textContent = SAFE_QUESTIONS.length;
+      $("#safeCount").textContent = ($("#includeReview").checked ? ALL_QUESTIONS : SAFE_QUESTIONS).length;
       $("#allCount").textContent = ALL_QUESTIONS.length;
       $("#bankTotal").textContent = `${ALL_QUESTIONS.length.toLocaleString()} 题`;
       $("#bankGroups").textContent = `${new Set(ALL_QUESTIONS.map(q => q.chapter)).size} 个学习分组`;
@@ -2812,6 +2812,7 @@
     }
 
     /* ---------- 事件绑定（委托，避免每次重建都挂监听） ---------- */
+    $("#includeReview").addEventListener("change", renderStats);
     $("#startFull").addEventListener("click", () => startExam("full"));
     $("#startQuick").addEventListener("click", () => startExam("quick"));
     $("#startPractice").addEventListener("click", startPractice);

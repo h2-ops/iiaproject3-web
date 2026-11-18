@@ -1,4 +1,4 @@
-const CACHE = "iiaproject3-shell-v2";
+const CACHE = "iiaproject3-shell-v3";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", (event) => {
