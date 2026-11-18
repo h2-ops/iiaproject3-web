@@ -1,0 +1,7 @@
+data/
+node_modules/
+.env*
+*.xlsx
+*questions*.json
+*progress*.json
+*.zip
